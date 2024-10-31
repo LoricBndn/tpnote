@@ -16,11 +16,11 @@ class Forfait {
         return $this->idForfait;
     }
 
-    function getCiv(): string {
+    function getLib(): string {
         return $this->libForfait;
     }
 
-    function getNom(): string {
+    function getMt(): string {
         return $this->mtForfait;
     }
 
@@ -29,11 +29,11 @@ class Forfait {
         $this->idForfait = $id;
     }
 
-    function setCiv(string $lib): void {
+    function setLib(string $lib): void {
         $this->libForfait = $lib;
     }
 
-    function setNom(string $mt): void {
+    function setMt(string $mt): void {
         $this->mtForfait = $mt;
     }
 }
