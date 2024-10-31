@@ -11,10 +11,12 @@ class Client {
     private $cpCli;
     private $communeCli;
     private $tauxMaxRemiseCli;
+    private $motDePasseCli;
 
     // constructeur    
     function __construct(string $id = '', string $civ = '', string $nom = '', string $prenom = '', string $tel = '', 
-                        string $mel = '', string $adr = '', string $cp = '', string $commune = '', string $tauxMaxRemise = '') {
+                        string $mel = '', string $adr = '', string $cp = '', string $commune = '', string $tauxMaxRemise = '',
+                        string $motDePasse = '') {
         $this->idCli = $id;
         $this->civCli = $civ;
         $this->nomCli = $nom;
@@ -25,87 +27,96 @@ class Client {
         $this->cpCli = $cp;
         $this->communeCli = $commune;
         $this->tauxMaxRemiseCli = $tauxMaxRemise;
+        $this->motDePasseCli = $motDePasse;
     }
 
     // getters
-    function getId(): string{
+    function getId(): string {
         return $this->idCli;
     }
 
-    function getCiv(): string{
+    function getCiv(): string {
         return $this->civCli;
     }
 
-    function getNom(): string{
+    function getNom(): string {
         return $this->nomCli;
     }
 
-    function getPrenom(): string{
+    function getPrenom(): string {
         return $this->prenomCli;
     }
 
-    function getTel(): string{
+    function getTel(): string {
         return $this->telCli;
     }
 
-    function getMel(): string{
+    function getMel(): string {
         return $this->melCli;
     }
 
-    function getAdr(): string{
+    function getAdr(): string {
         return $this->adrCli;
     }
 
-    function getCp(): string{
+    function getCp(): string {
         return $this->cpCli;
     }
 
-    function getCommune(): string{
+    function getCommune(): string {
         return $this->communeCli;
     }
 
-    function getTauxMaxRemise(): string{
+    function getTauxMaxRemise(): string {
         return $this->tauxMaxRemiseCli;
     }
 
+    function getMotDePasse(): string {
+        return $this->motDePasseCli;
+    }
+
     // setters    
-    function setId(string $id): void{
+    function setId(string $id): void {
         $this->idCli = $id;
     }
 
-    function setCiv(string $civ): void{
+    function setCiv(string $civ): void {
         $this->civCli = $civ;
     }
 
-    function setNom(string $nom): void{
+    function setNom(string $nom): void {
         $this->nomCli = $nom;
     }
 
-    function setPrenom(string $prenom): void{
+    function setPrenom(string $prenom): void {
         $this->prenomCli = $prenom;
     }
 
-    function setTel(string $tel): void{
+    function setTel(string $tel): void {
         $this->telCli = $tel;
     }
 
-    function setMel(string $mel): void{
+    function setMel(string $mel): void {
         $this->melCli = $mel;
     }
 
-    function setAdr(string $adr): void{
+    function setAdr(string $adr): void {
         $this->adrCli = $adr;
     }
 
-    function setCp(string $cp): void{
+    function setCp(string $cp): void {
         $this->cpCli = $cp;
     }
 
-    function setCommune(string $commune): void{
+    function setCommune(string $commune): void {
         $this->communeCli = $commune;
     }
 
-    function setTauxMaxRemise(string $tauxMaxRemise): void{
+    function setTauxMaxRemise(string $tauxMaxRemise): void {
         $this->tauxMaxRemiseCli = $tauxMaxRemise;
+    }
+
+    function setMotDePasse(string $motDePasse): void {
+        $this->motDePasseCli = $motDePasse;
     }
 }
