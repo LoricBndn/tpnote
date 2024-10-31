@@ -1,6 +1,5 @@
 <?php
-class Client {
-    
+class Forfait {
     private $idForfait;
     private $libForfait;
     private $mtForfait;
