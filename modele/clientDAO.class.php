@@ -2,7 +2,7 @@
     require_once 'connexion.php'; 
     require_once 'client.class.php';
 
-class ClientDAO{
+class ClientDAO {
     private $bd;
     private $select;
 
@@ -15,7 +15,7 @@ class ClientDAO{
     function insert (Client $client) : void {
         $this->bd->execSQL("INSERT INTO client (id_cli, civ_cli, nom_cli, prenom_cli, tel_cli, mel_cli, adr_cli, cp_cli, 
                             commune_cli, tauxmax_remise_cli, motdepasse_cli)
-                            VALUES (id, :civ, :nom, :prenom, :tel, :mel, :adr, :cp, :commune, :tauxMaxRemise, :motDePasse)"
+                            VALUES (:id, :civ, :nom, :prenom, :tel, :mel, :adr, :cp, :commune, :tauxMaxRemise, :motDePasse)"
                             ,[':id'=>$client->getId() ,':civ'=>$client->getCiv(), ':nom'=>$client->getNom(), 
                             ':prenom'=>$client->getPrenom(), ':tel'=>$client->getTel(), ':mel'=>$client->getMel(),
                             ':adr'=>$client->getAdr(), ':cp'=>$client->getCp(), ':commune'=>$client->getCommune(), 
