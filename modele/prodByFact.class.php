@@ -1,7 +1,7 @@
 <?php
     require_once 'produit.class.php';
 
-class EquiptBySalle {
+class ProdByFact {
     // table ligne
 
     private $numFact;
