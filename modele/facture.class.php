@@ -1,5 +1,4 @@
 <?php
-    require_once 'client.class.php';
     require_once 'forfait.class.php';
 
 class Facture {
