@@ -78,8 +78,8 @@ class ProduitDAO {
                                     WHERE code_prod NOT IN (
                                         SELECT code_prod
                                         FROM ligne
-                                        WHERE code_prod = :codeProd)",
-                                    [':codeProd'=>$numFact])));
+                                        WHERE num_fact = :numFact)",
+                                    [':numFact'=>$numFact])));
     }
 }    
 
