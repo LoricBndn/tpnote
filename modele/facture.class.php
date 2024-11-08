@@ -1,21 +1,22 @@
 <?php
     require_once 'forfait.class.php';
+    require_once 'client.class.php';
 
 class Facture {
     private $numFact;
     private $dateFact;
     private $commentFact;
     private $tauxRemiseFact;
-    private $idCli;
+    private $client;
     private $forfait;
 
-    function __construct(string $numFact ='', string $dateFact = '', string $commentFact = '', string $tauxRemiseFact = '',
-    string $idCli = '', Forfait $forfait = null) {
+    function __construct(string $numFact ='', string $dateFact = '', string $commentFact = '', int $tauxRemiseFact = 0,
+    Client $client = '', Forfait $forfait = null) {
         $this->numFact = $numFact;
         $this->dateFact = $dateFact;
         $this->commentFact = $commentFact;
         $this->tauxRemiseFact = $tauxRemiseFact;
-        $this->idCli = $idCli;
+        $this->client = $client;
         $this->forfait = $forfait;
     }
 
@@ -32,12 +33,12 @@ class Facture {
         return $this->commentFact;
     }
 
-    function getTauxRemiseFact(): string {
+    function getTauxRemiseFact(): int {
         return $this->tauxRemiseFact;
     }
 
-    function getIdCli(): string {
-        return $this->idCli;
+    function getClient(): Client {
+        return $this->client;
     }
 
     function getForfait(): Forfait {
@@ -57,12 +58,12 @@ class Facture {
         $this->commentFact = $commentFact;
     }
 
-    function setTauxRemiseFact(string $tauxRemiseFact): void {
+    function setTauxRemiseFact(int $tauxRemiseFact): void {
         $this->tauxRemiseFact = $tauxRemiseFact;
     }
 
-    function setIdCli(string $idCli): void {
-        $this->idCli = $idCli;
+    function setClient(Client $client): void {
+        $this->client = $client;
     }
 
     function setForfait(Forfait $forfait): void {
