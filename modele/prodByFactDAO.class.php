@@ -79,5 +79,15 @@ class ProdByFactDAO {
         $res = ($this->loadQuery($this->bd->execSQLselect($req, [':codeProd'=>$codeProd, 'numFact'=>$numFact])));
         return ($res != []); // si tableau de factures est vide alors le produit n’existe pas
     }
+
+    function getMontantProduit (string $numFact, string $codeProd) : int {
+        // renvoie le montant à payer pour un produit par rapport à son prix unitaire et sa qte
+        $req1 = "SELECT qte_prod FROM ligne WHERE num_fact = :numFact AND code_prod = :codeProd";
+        $qte = ($this->loadQuery($this->bd->execSQLselect($req1, [':numFact'=>$numFact, ':codeProd'=>$codeProd])));
+        $req2 = "SELECT tarif_ht FROM produit WHERE code_prod = :codeProd";
+        $tarifHt = ($this->loadQuery($this->bd->execSQLselect($req2, [':codeProd'=>$codeProd])));
+        $res = $qte[0] * $tarifHt[0];
+        return $res;
+    }
 }
 ?>
