@@ -2,6 +2,7 @@
     require_once 'connexion.php';
     require_once 'facture.class.php';
     require_once 'forfaitDAO.class.php';
+    require_once 'clientDAO.class.php';
 
 class FactureDAO {
     private $bd;
@@ -17,7 +18,7 @@ class FactureDAO {
                             VALUES (:numFact, :dateFact, :commentFact, :tauxRemiseFact, :idCli, :idForfait)",
                             [':numFact'=>$facture->getNumFact(), ':dateFact'=>$facture->getDateFact(),
                             ':commentFact'=>$facture->getCommentFact(), ':tauxRemiseFact'=>$facture->getTauxRemiseFact(), 
-                            ':idCli'=>$facture->getIdCli(), ':idForfait'=>$facture->getForfait()->getId()]);
+                            ':idCli'=>$facture->getClient()->getId(), ':idForfait'=>$facture->getForfait()->getId()]);
     }    
 
     function delete (string $numFact) : void {
@@ -33,20 +34,22 @@ class FactureDAO {
                             WHERE num_fact = :numFact",
                             [':numFact'=>$facture->getNumFact(), ':dateFact'=>$facture->getDateFact(),
                             ':commentFact'=>$facture->getCommentFact(), ':tauxRemiseFact'=>$facture->getTauxRemiseFact(), 
-                            ':idCli'=>$facture->getIdCli(), ':idForfait'=>$facture->getForfait()->getId()]);
+                            ':idCli'=>$facture->getClient()->getId(), ':idForfait'=>$facture->getForfait()->getId()]);
     }    
 
     private function loadQuery (array $result) : array {
         $forfaitDAO = new ForfaitDAO(); 
+        $clientDAO = new ClientDAO();
         $factures = [];
         foreach($result as $row) {
             $forfait = $forfaitDAO->getById($row['id_forfait']);
+            $client = $clientDAO->getById($row['id_cli']);
             $facture = new Facture(); 
             $facture->setNumFact($row['num_fact']);
             $facture->setDateFact($row['date_fact']);
             $facture->setCommentFact($row['comment_fact']);
             $facture->setTauxRemiseFact($row['taux_remise_fact']);
-            $facture->setIdCli($row['id_cli']);
+            $facture->setClient($client);
             $facture->setForfait($forfait);
             $factures[] = $forfait;
         }
@@ -75,4 +78,31 @@ class FactureDAO {
         $res = ($this->loadQuery($this->bd->execSQLselect($req, [':numFact'=>$numFact])));
         return ($res != []); // si tableau de factures est vide alors la facture n’existe pas
     }
+
+    function getTotalNbProd(string $numFact) : int {
+        // Renvoie la quantité totale des produits d'une facture
+        $res = $this->bd->execSQLselect("SELECT SUM(qte_prod) as total FROM ligne WHERE num_fact = :numFact", [':numFact'=>$numFact]);
+		return (isset($res[0]['total'])) ? $res[0]['total'] : 0;
+    }
+
+    function getMontantTotalSansRemise(string $numFact) : int {
+        $totalSansRemise = 0;
+        $prodByFactDAO = new ProdByFactDAO();
+        $produits = $this->bd->execSQLselect("SELECT code_prod FROM ligne WHERE num_fact = :numFact", [':numFact' => $numFact]);
+        foreach ($produits as $produit) {
+            $codeProd = $produit['code_prod'];
+            $totalSansRemise += $prodByFactDAO->getMontantProduit($numFact, $codeProd);
+        }
+        return $totalSansRemise;
+    }
+
+    function getMontantTotalAvecRemise(string $numFact) : int {
+        $totalSansRemise = $this->getMontantTotalSansRemise($numFact);
+        $res = $this->bd->execSQLselect("SELECT taux_remise_fact FROM facture WHERE num_fact = :numFact", 
+                                        [':numFact' => $numFact]);
+        $tauxRemise = (isset($res[0]['taux_remise_fact'])) ? $res[0]['taux_remise_fact'] : 0;
+        $totalAvecRemise = $totalSansRemise * (1 - $tauxRemise / 100);
+        return $totalAvecRemise;
+    }
+
 }
