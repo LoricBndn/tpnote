@@ -11,7 +11,7 @@ class Facture {
     private $forfait;
 
     function __construct(string $numFact ='', string $dateFact = '', string $commentFact = '', int $tauxRemiseFact = 0,
-    Client $client = '', Forfait $forfait = null) {
+    Client $client = null, Forfait $forfait = null) {
         $this->numFact = $numFact;
         $this->dateFact = $dateFact;
         $this->commentFact = $commentFact;
