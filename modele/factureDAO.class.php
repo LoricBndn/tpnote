@@ -3,6 +3,7 @@
     require_once 'facture.class.php';
     require_once 'forfaitDAO.class.php';
     require_once 'clientDAO.class.php';
+    require_once 'prodByFactDAO.class.php';
 
 class FactureDAO {
     private $bd;
@@ -51,7 +52,7 @@ class FactureDAO {
             $facture->setTauxRemiseFact($row['taux_remise_fact']);
             $facture->setClient($client);
             $facture->setForfait($forfait);
-            $factures[] = $forfait;
+            $factures[] = $facture;
         }
         return $factures;
     }
